@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Distributed Search Platform</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f2a20; color: #ebebeb; display: flex; flex-direction: column; align-items: center; padding: 50px; }
+        .search-container { width: 100%; max-width: 600px; text-align: center; }
+        input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #2f494d; background: #1e1938; color: white; font-size: 16px; margin-bottom: 20px; box-sizing: border-box; }
+        .result-card { background: #1e1f3b; padding: 20px; margin-bottom: 15px; border-radius: 8px; border-left: 4px solid #38e8f8; text-align: left; }
+        .meta { color: #94a3b8; font-size: 12px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1>🔍 Enterprise AI Search Engine</h1>
+        <input type="text" id="searchBar" placeholder="Search architecture, tags, vectors..." onkeyup="executeSearch(event)">
+        <div id="results"></div>
+    </div>
+
+    <script>
+        async function executeSearch(event) {
+            const query = document.getElementById('searchBar').value;
+            if (!query) { document.getElementById('results').innerHTML = ''; return; }
+            
+            try {
+                const response = await fetch(`http://127.0.0{encodeURIComponent(query)}`);
+                const data = await response.json();
+                
+                let html = '';
+                data.results.forEach(item => {
+                    html += `
+                        <div class="result-card">
+                            <h3>${item.title}</h3>
+                            <div class="meta">Category: <strong>${item.category}</strong> | Vector Match Score: <strong>${item.score}</strong></div>
+                        </div>`;
+                });
+                document.getElementById('results').innerHTML = html;
+            } catch (err) {
+                console.error("Gateway offline or loading...", err);
+            }
+        }
+    </script>
+</body>
+</html>
 

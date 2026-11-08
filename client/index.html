@@ -25,8 +25,8 @@
             if (!query) { document.getElementById('results').innerHTML = ''; return; }
             
             try {
-                const response = await fetch(`http://127.0.0{encodeURIComponent(query)}`);
-                const data = await response.json();
+             const response = await fetch(`http://127.0.0{encodeURIComponent(query)}`);
+             const data = await response.json();
                 
                 let html = '';
                 data.results.forEach(item => {
